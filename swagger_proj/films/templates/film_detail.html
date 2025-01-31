@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<!-- Фон страницы с голубым цветом, во всю высоту экрана -->
+<div class="container-fluid" style="background-color: #87CEEB; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="card shadow-lg p-4" style="background-color: #f0f8ff; color: #333; border-radius: 15px;">
+                    <div class="card-body text-center">
+                        <h1 class="card-title text-dark">{{ film.title }}</h1>
+                        <h5 class="text-muted mb-4">Дата создания: {{ film.date_of_creation }}</h5>
+
+                        <p class="card-text text-justify" style="color: #555;">{{ film.description }}</p>
+
+                        <hr>
+
+                        <div class="text-left">
+                            <p><strong>Главный актёр:</strong> {{ film.main_actor }}</p>
+                            <p><strong>Жанр:</strong> {{ film.genre }}</p>
+                            <p><strong>Опубликован:</strong> {{ film.is_published|yesno:"Да,Нет" }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<!-- Фон страницы в голубом цвете -->
+<div class="container-fluid" style="background-color: #87CEEB; min-height: 100vh; padding-top: 20px; padding-bottom: 20px;">
+    <div class="col-md-8 offset-md-2">
+
+        <div style="position: absolute; top: 10px; right: 20px; background-color: #4b7b96; color: white; padding: 10px 20px; border-radius: 10px; box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);">
+            <strong>Количество фильмов:</strong>
+             {{ num }}
+            <br>
+            <strong>Количество посещений странички:</strong>
+             {{ visits_count }}
+        </div>
+
+        <h1 class="text-center my-4 text-light">Фильмы</h1>
+        <hr style="border-color: #4d6d94;">
+
+        <!-- Форма фильтрации -->
+        <div class="mb-4">
+            <form method="get">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="main_actor" placeholder="Главный актёр" value="{{ request.GET.main_actor }}" style="border-color: #00bcd4; border-width: 2px; background-color: #4b7b96; color: white;">
+                    <input type="text" class="form-control" name="genre" placeholder="Жанр" value="{{ request.GET.genre }}" style="border-color: #00bcd4; border-width: 2px; background-color: #4b7b96; color: white;">
+                    <button class="btn btn-info" type="submit">Применить фильтры</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Отображение фильмов -->
+        {% if films %}
+            {% for film in films %}
+            <div class="card mb-4 shadow-sm" style="border-radius: 15px; overflow: hidden; background-color: #f0f8ff; color: #333;">
+                <div class="card-body">
+                    <h2 class="card-title text-dark">{{ film.title }}</h2>
+                    <h6 class="text-muted mb-3">Дата создания: {{ film.date_of_creation }} | Главный актёр: {{ film.main_actor }} | Жанр: {{ film.genre }}</h6>
+                    <p class="card-text text-justify" style="color: #555;">{{ film.description }}...</p>
+                    <a href="{% url 'film_detail' film.pk %}" class="btn btn-info" style="border-radius: 20px;">Читать дальше</a>
+                    <form method="post" action="{% url 'cart:cart_add' film.pk %}" style="display: inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="btn btn-success">Добавить в корзину</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <!-- Если фильмов не найдено -->
+            <div class="alert alert-warning text-center" role="alert" style="background-color: #00bcd4; color: #fff;">
+                Фильмы не найдены по заданным фильтрам. Попробуйте изменить параметры поиска.
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
