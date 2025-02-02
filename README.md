@@ -1,1 +1,1 @@
-This project is in development, the latest course project.
+This project is in proccess, the latest course project.
