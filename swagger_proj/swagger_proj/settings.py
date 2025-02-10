@@ -106,6 +106,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# for global pagination
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination', # for different pagination style
+    'PAGE_SIZE': 2
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
